@@ -3,6 +3,7 @@
 }
 
 .background {
+  padding: 200px;
   background-image: url('./images/background.jpg');
   background-size: cover;
   color: white;
