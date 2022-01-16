@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+
+    <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
+
+        /* 
+        let counter = 0;
+        function App() {
+            const [counter, setCounter] = React.useState(0);
+            const onClick = () => {
+                // setCounter(counter+1);
+                setCounter((current) => current + 1);
+            };
+            return (
+                <div>
+                <h3>Total clicks: {counter}</h3>
+                <button onClick={onClick}>Click me</button>
+            </div>
+            );
+        };
+        ReactDOM.render(<App />, root);
+        */
+
+        /* ##########State########## */
+        /*
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
+            return (
+                <div>
+                    <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input 
+                        value={inverted? amount*60 : amount}
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange}
+                        disabled={inverted}/>
+                    </div>
+
+                    <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input 
+                        value={inverted ? amount : Math.round(amount / 60)}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        disabled={!inverted}
+                        onChange={onChange}/>        
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>{inverted ? "Turn Back" : "Invert"}</button>
+                    </div>
+            )
+        };
+        function KmToMiles(){
+            return <h3>KM 2 M</h3>
+        }
+        function App() {
+            const [index, serIndex] = React.useState("XX")
+            const onSelect = (event) => {
+                serIndex(event.target.value);
+            };
+            return (
+                <div>
+                    <h1>Super Converter</h1>
+                    <select value={index} onChange={onSelect}>
+                        <option value="XX">Select your units</option>
+                        <option value="0">Minutes & Hours</option>
+                        <option value="1">Km & Miles</option>
+                    </select>
+                    <hr />
+                    {index === "XX" ? "Please select your units" : null}
+                    {index === "0" ? <MinutesToHours /> : null}
+                    {index === "1" ? <KmToMiles /> : null}
+                </div>
+            );
+        }
+        ReactDOM.render(<App />, root);
+        */
+
+        /* ##########Props : 전달 받는 속성########## */
+        /*function Btn({text, onCLick}) {
+            console.log(text, "was rendered");
+            return (
+                <button 
+                    onClick = {onCLick}
+                    style={{
+                        background: "tomato",
+                        color: "white",
+                        padding: "10px 20px",
+                        border: 0,
+                        borderRadius: 10,
+                    }}
+                >
+                    {text}
+                </button>
+            );
+        }
+        const MemorizedBtn = React.memo(Btn);
+        function App() { 
+            const [value, setValue] = React.useState("Save Changes");
+            const changeValue = () => setValue("Revert Changes");
+            return (
+                <div>
+                    <MemorizedBtn text={value} onCLick={changeValue} />
+                    <MemorizedBtn text="Continue" />    
+                </div>
+            );
+        }
+        ReactDOM.render(<App />, root);*/
+
+        function Btn({text, fontSize}) {
+            return (
+                <button 
+                    style={{
+                        background: "tomato",
+                        color: "white",
+                        padding: "10px 20px",
+                        border: 0,
+                        borderRadius: 10,
+                        fontSize,
+                    }}
+                >
+                    {text}
+                </button>
+            );
+        }
+        Btn.propTypes  = {
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        };
+        function App() { 
+            return (
+                <div>
+                    <Btn text="Save Changes" fontSize={18} /> 
+                    <Btn text={"Continue"} /> 
+                </div>
+            );
+        }
+        ReactDOM.render(<App />, root);
+    </script>
+</html>
