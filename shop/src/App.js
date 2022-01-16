@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import './App.css';
 import { Navbar, Nav, NavDropdown, Jumbotron, Button, Container } from "react-bootstrap";
 import Data from './data';
-
+import Detail from './Detail';
+ 
 import { Link, Route, Switch} from 'react-router-dom';
 
 function App() {
@@ -14,12 +15,12 @@ function App() {
     <div className="App">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/detail">Detail</Nav.Link>
             <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -39,7 +40,7 @@ function App() {
       </Navbar>
 
       
-
+    <Switch>
       <Route exact path="/">
         <Jumbotron className="background">
           <h1>20% Season Off</h1>
@@ -62,24 +63,20 @@ function App() {
           </div>
         </div>
       </Route>
-      <Route exact path="/detail">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-            </div>
-            <div className="col-md-6 mt-4">
-              <h4 className="pt-5">상품명</h4>
-              <p>상품설명</p>
-              <p>120000원</p>
-              <button className="btn btn-danger">주문하기</button> 
-            </div>
-          </div>
-        </div> 
+
+      <Route exact path="/detail/:id">
+          <Detail shoes={shoes}/>
       </Route>
+
+      <Route path="/:id">
+        <div>아무거나 적었을 떄 이거 보여주셈</div>
+        </Route>
+        
+    </Switch>
     </div>
   );
 }
+
 
 function Card(props) {
   return (
