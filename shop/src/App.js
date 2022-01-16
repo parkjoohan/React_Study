@@ -4,12 +4,16 @@ import './App.css';
 import { Navbar, Nav, NavDropdown, Jumbotron, Button, Container } from "react-bootstrap";
 import Data from './data';
 import Detail from './Detail';
- 
+import axios from 'axios';
+
 import { Link, Route, Switch} from 'react-router-dom';
 
 function App() {
 
   let [shoes, shoes변경] = useState(Data);
+  let [재고, 재고변경] = useState([10, 11, 12]);
+
+
 
   return (
     <div className="App">
@@ -60,12 +64,26 @@ function App() {
                 return <Card shoes={a} i={i}/>
               })
             }    
-          </div>
+            </div>
+            <button className='btn btn-primary' onClick={() => {
+
+              // // 서버에 정보를 보낼 때
+              // axios.post('서버URL', {id:'아이디', pw: 1234})
+              
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result) => {
+
+                  shoes변경([...shoes, ...result.data]);
+                })
+                .catch(() => {
+                  console.log("실패했어요")
+                });
+            }}>더보기</button>
         </div>
       </Route>
 
       <Route exact path="/detail/:id">
-          <Detail shoes={shoes}/>
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
       </Route>
 
       <Route path="/:id">
