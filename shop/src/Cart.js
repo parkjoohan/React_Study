@@ -1,7 +1,8 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
-function Cart() {
+function Cart(props) {
     return (
         <div>
             <Table responsive>
@@ -14,15 +15,30 @@ function Cart() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {
+                        props.state.map((a, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>{a.id}</td>
+                                    <td>{a.name}</td>
+                                    <td>{a.quan}</td>
+                                    <td>Table cell</td>
+                                </tr>
+                            )
+                        })
+                    }
                 </tbody>
             </Table>
         </div>
     )
 }
-export default Cart;
+
+// state를 props화
+function 함수명(state) {
+    return {
+        state : state
+    }
+}
+export default connect(함수명)(Cart)
+
+// export default Cart;

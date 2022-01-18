@@ -98,8 +98,6 @@ function App() {
         <div>아무거나 적었을 떄 이거 보여주셈</div>
       </Route>
         
-      
-        
     </Switch>
     </div>
   );
