@@ -1,18 +1,20 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import { Navbar, Nav, NavDropdown, Jumbotron, Button, Container } from "react-bootstrap";
 import Data from './data';
 import Detail from './Detail';
 import axios from 'axios';
 
-import { Link, Route, Switch} from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
+
+export let 재고context = React.createContext();
 
 function App() {
 
   let [shoes, shoes변경] = useState(Data);
   let [재고, 재고변경] = useState([10, 11, 12]);
-
+  
   return (
     <div className="App">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -22,7 +24,7 @@ function App() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link href="/detail">Detail</Nav.Link>
+            <Nav.Link href="/detail/0">Detail</Nav.Link>
             <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -56,13 +58,15 @@ function App() {
         </Jumbotron>
         
         <div className='container'>
-          <div className='row'>
-            {
-              shoes.map((a, i) => {
-                return <Card shoes={a} i={i}/>
-              })
-            }    
+          <재고context.Provider value={재고}> 
+            <div className='row'>
+              {
+                shoes.map((a, i) => {
+                  return <Card shoes={a} i={i}/>
+                })
+              }    
             </div>
+        </재고context.Provider> 
             <button className='btn btn-primary' onClick={() => {
 
               // // 서버에 정보를 보낼 때
@@ -81,7 +85,9 @@ function App() {
       </Route>
 
       <Route exact path="/detail/:id">
-          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+        <재고context.Provider value={재고}>  
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
+        </재고context.Provider>   
       </Route>
 
       <Route path="/:id">
@@ -95,12 +101,15 @@ function App() {
 
 
 function Card(props) {
+
+  let 재고 = useContext(재고context);
+
   return (
     <div className='col-md-4'>
       <img src={'https://codingapple1.github.io/shop/shoes' +  (props.i+1) +'.jpg'} width="100%" />
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content} & {props.shoes.price}원</p>
-      
+      <p>재고 : {재고[props.i]}</p>
     </div>
   )
 }
