@@ -13,8 +13,6 @@ function App() {
   let [shoes, shoes변경] = useState(Data);
   let [재고, 재고변경] = useState([10, 11, 12]);
 
-
-
   return (
     <div className="App">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -102,6 +100,7 @@ function Card(props) {
       <img src={'https://codingapple1.github.io/shop/shoes' +  (props.i+1) +'.jpg'} width="100%" />
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content} & {props.shoes.price}원</p>
+      
     </div>
   )
 }
