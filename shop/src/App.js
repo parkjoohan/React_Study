@@ -5,8 +5,8 @@ import { Navbar, Nav, NavDropdown, Jumbotron, Button, Container } from "react-bo
 import Data from './data';
 import Detail from './Detail';
 import axios from 'axios';
-
 import { Link, Route, Switch } from 'react-router-dom';
+import Cart from './Cart.js';
 
 export let 재고context = React.createContext();
 
@@ -89,10 +89,16 @@ function App() {
           <Detail shoes={shoes} 재고={재고} 재고변경={재고변경} />
         </재고context.Provider>   
       </Route>
-
+        
+      <Route path="/cart">
+        <Cart></Cart>
+      </Route>
+        
       <Route path="/:id">
         <div>아무거나 적었을 떄 이거 보여주셈</div>
-        </Route>
+      </Route>
+        
+      
         
     </Switch>
     </div>
