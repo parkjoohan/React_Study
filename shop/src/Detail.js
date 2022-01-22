@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './Detail.scss';
 import 재고context from './App.js';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 let 박스 = styled.div`
     padding: 20px;
@@ -27,12 +28,16 @@ function Detail(props) {
         let 타이머 = setTimeout(() => {
             alert변경(false)
         }, 2000);
-        return () => {clearTimeout(타이머)}
+        return () => { clearTimeout(타이머) }
     }, []);
 
     let { id } = useParams();
     let history = useHistory();
     let 찾은상품 = props.shoes.find(x => x.id == id);
+
+    useEffect(() => {
+        var arr = localStorage.getItem('watched');
+    }, []);
 
     return (
         <div className="container">
@@ -57,7 +62,13 @@ function Detail(props) {
                     <p>{찾은상품.content}</p>
                     <p>{찾은상품.price}원</p>
                     <Info 재고={props.재고}></Info>
-                    <button className="btn btn-danger" onClick={() => { props.재고변경([9,11,12])}}>주문하기</button> 
+                    <button className="btn btn-danger" onClick={() => {
+
+                        props.재고변경([9, 11, 12])
+                        props.dispatch({ type: '항목추가', payload: { id: 찾은상품.id, name: 찾은상품.title, quan: 1 } });
+                        history.push('/cart');
+
+                    }}>주문하기</button> 
                     <button className="btn btn-primary" onClick={() => {
                         history.goBack();
                 }}>뒤로가기</button> 
@@ -100,4 +111,13 @@ function Info(props) {
         <p>재고 : {props.재고[0]}</p>
     )
 }
-export default Detail;
+
+// state를 props화
+function 함수명(state) {
+    console.log(state);
+    return {
+        state: state.reducer,
+        alert열렸니: state.reducer2
+    }
+}
+export default connect(함수명)(Detail)
