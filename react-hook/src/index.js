@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+import useAxios from './useAxios';
 
 /*import "./styles.css";
 
@@ -267,41 +268,95 @@ const App = () => {
 //   );
 // };
 
-//useFullScreen
-const useFullscreen = (callback) => {
-  const element = useRef();
-  const triggerFull = () => {
-    if (element.current) {
-      element.current.requestFullscreen();
-      if (callback && typeof callback === "function") {
-        callback(true);
-      }
-    }
-  };
-  const exitFull = () => {
-    document.exitFullscreen();
-    if (callback && typeof callback === "function") {
-      callback(false);
-    }
-  };
-  return { element, triggerFull, exitFull };
-};
+// //useFullScreen
+// const useFullscreen = (callback) => {
+//   const element = useRef();
+//   const triggerFull = () => {
+//     if (element.current) {
+//       element.current.requestFullscreen();
+//       if (callback && typeof callback === "function") {
+//         callback(true);
+//       }
+//     }
+//   };
+//   const exitFull = () => {
+//     document.exitFullscreen();
+//     if (callback && typeof callback === "function") {
+//       callback(false);
+//     }
+//   };
+//   return { element, triggerFull, exitFull };
+// };
 
+// const App = () => {
+//   const onFullS = (isFull) => {
+//     console.log(isFull ? "We are full" : "We are small");
+//   };
+//   const { element, triggerFull, exitFull } = useFullscreen(onFullS);
+//   return (
+//     <div className="App" style={{ height: "1000vh" }}>
+//       <div ref={element}>
+//         <img src="http://akns-images.eonline.com/eol_images" />
+//         <button onClick={exitFull}>Exit fullscreen</button>
+//       </div>
+//       <button onClick={triggerFull}>Make fullscreen</button>
+//     </div>
+//   );
+// };
+
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<App />, rootElement);
+
+
+// //useNotification
+// const useNotification = (title, options) => {
+//   if (!("Notification" in window)) {
+//     return;
+//   }
+
+//   const fireNotif = () => {
+//     if (Notification.permission !== "granted") {
+//       Notification.requestPermission().then(permission => {
+//         if (permission === 'granted') {
+//           new Notification(title, options);
+//         } else {
+//           return;
+//         }
+//       })
+//     } else {
+//       new Notification(title, options);
+//     }
+//   };
+//   return fireNotif;
+// };
+
+// const App = () => {
+//   const triggerNotif = useNotification("Can I steal your kimchi? ");
+//   return (
+//     <div className="App" style={{ height: "1000vh" }}>
+//       <button onClick={triggerNotif}>Hello</button>
+//     </div>
+//   );
+// };
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<App />, rootElement);
+
+
+//useAxios
 const App = () => {
-  const onFullS = (isFull) => {
-    console.log(isFull ? "We are full" : "We are small");
-  };
-  const { element, triggerFull, exitFull } = useFullscreen(onFullS);
+  const {loading, data, error, refetch} = useAxios({
+    url: "https://yts.mx/api/v2/list_movies.json"
+  });
+
+  console.log(`Loading: ${loading}\nError: ${error}\nData: ${JSON.stringify(data)}`);
+
   return (
     <div className="App" style={{ height: "1000vh" }}>
-      <div ref={element}>
-        <img src="http://akns-images.eonline.com/eol_images" />
-        <button onClick={exitFull}>Exit fullscreen</button>
-      </div>
-      <button onClick={triggerFull}>Make fullscreen</button>
+      <h1>{data && data.status}</h1>
+      <h2>{loading && "Loading"}</h2>
+      <button onClick={refetch}>Refetch</button>
     </div>
   );
 };
-
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
