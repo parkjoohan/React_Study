@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import { authService } from 'fbase';
+import React, { useState } from 'react';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from "firebase/auth";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [newAccount, setNewAccount] = useState(true);
+
     const onChange = (event) => {
         const { target: { name, value } } = event;
         if (name === "email") {
@@ -11,8 +15,32 @@ const Auth = () => {
             setPassword(value);
         }
     };
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
+        try {
+            const auth = getAuth();
+            if (newAccount) {
+                
+                createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    // ...
+                })    
+            } else {
+                const auth = getAuth();
+                signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    // ...
+                })
+            }
+            console.log(auth, email, password);
+        } catch (error) {
+            console.log(error);
+        }
+        
     };
 
     return (
@@ -36,8 +64,7 @@ const Auth = () => {
                 />
                 <input
                     type="submit"
-                    placeholder='Log In'
-                    required
+                    value={newAccount ? "Create Account" : "Log In"}
                 />
             </form>
             <div>
