@@ -99,3 +99,44 @@ function 함수(x: number | string): void {
 }
 
 함수(2)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////  Narrowing & Assertion  /////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// type이 아직 하나로 확정되지 않았을 경우 type narrowing을 써야한다
+function 내함수(x: number | string) {
+    if (typeof x === 'string') {        // ==> typeof를 통해 type을 확인한다
+        return x + '1'
+    } else {
+        return x + 1
+    }
+}
+
+내함수(123);
+
+// 어떤 변수가 타입이 아직 불확실하면 if문 등으로 Narrowing 해줘야 조작가능
+// Narrowing으로 판정해주는 문법들 : typeof 변수, 속성명 in 오브젝트자료, 인스턴스 instanceof 부모
+function 내함수(x: number | string) {
+    
+    let array: number[] = [];
+    if (typeof x === 'number') {
+        array[0] = x;
+    } else {
+        // else 안 쓰면 에러 날 수도 있음
+    }
+}
+
+내함수(123);
+
+// Assertion 문법 : 타입 덮어쓰기
+// 1. Narrowing할때 사용한다. (타입을 a에서 b로 바꾸는 문법이 아니라 x :number | string와 같이 정해지지 않았을 경우 선택해주는 문법)
+// 2. 무슨 타입이 들어올 지 100% 확실할 때 사용
+function 내함수(x :number | string) {
+    
+    let array: number[] = [];
+    array[0] = x as number;
+}
+
+내함수(123);
