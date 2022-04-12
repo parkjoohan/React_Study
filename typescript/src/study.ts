@@ -140,3 +140,51 @@ function 내함수(x :number | string) {
 }
 
 내함수(123);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////  타입도 변수에 담아쓰세요 type 키워드 써서 & readonly //////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// type alias 만드는 법
+type Animal = string | number | undefined;      // == let 동물 :string | number | undefined;
+let 동물 :Animal = 123;
+let 동물2: Animal = 'dog';
+
+type People = { name: string, age: number };    // == let 사람 :{ name: string, age: number } = { name : 'park', age : 20 }
+let 사람: People = { name: 'park', age: 20 };
+
+// const 변수 : 절대 변경할 수 없는 변수를 제작하는 방법 (등호로 제할당만 막는 역할)
+const 출생지역 = 'seoul';   
+const 출생지역2 = { region: 'seoul' }      // => const로 담은 object 수정은 자유롭게 가능
+
+// 하지만 typescript를 사용하면 object 자료 수정도 막을 수 있음 (readonly 사용)
+type Girlfriend = {
+    readonly name : string
+}
+
+const 여친 :Girlfriend = {
+    name : '앰버'
+}
+
+// objext 속성 안에도 ? 사용 가능
+type Girlfriend = {
+    name? : string | undefined
+}
+
+const 여친 :Girlfriend = {
+    name : '앰버'
+}
+
+// type 변수 => 당연히 union type으로 합치기 가능
+type Name = string;
+type Age = number;
+type Person = Name | Age;
+
+// &연산자로 object 타입 extend 하기
+type PositionX = { x: number };
+type PositionY = { y: number };
+
+type NewType = PositionX & PositionY        // { x: number, y: number };
+
+let position: NewType = { x: 10, y: 20 }
