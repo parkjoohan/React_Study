@@ -232,3 +232,55 @@ function 내함수함수(a: 'kim') {     // => kim이라는 자료만 들어올 
 내함수함수('kim');
 내함수함수(자료.name);     // => 문제 해결을 위해   1. object만들 때 타입 지정하거나    2. as 문법으로 타입을 바꾸던가      3. object 뒤에 as const를 사용하던가
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// 함수와 methods에 type alias 지정하는 법 /////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// type alias에 함수 type 저장해서 쓰는 법
+// 함수 type alias 부착하려면 함수표현식 써야한다
+type NumOut = (x : number, y : number ) => number 
+let ABC :NumOut = function(x,y){
+    return x + y
+}
+
+// object 안에 함수 만들 수 있음 
+let 회원정보 = {
+    name: 'kim',
+    // object 안의 함수 타입지정은 어떻게?
+    plusOne(a) {
+        return a + 1
+    },
+    chanegeName: () => {
+        console.log('안녕')
+    }
+}
+
+회원정보.plusOne(1);
+회원정보.changeName();
+
+// (숙제1) 위 코드에서 회원정보라는 변수에 타입지정 알아서 해보십시오.
+// - plusOne이라는 속성은 함수여야하고, 숫자를 넣어서 숫자를 뱉는 함수여야합니다.
+// - changeName이라는 속성은 함수여야하고, 아무것도 return하면 안됩니다.
+// - type 키워드를 쓰든 말든 알아서 합시다. 
+type Member = {
+    name : string,
+    age : number,
+    plusOne : ( x :number ) => number,
+    changeName : () => void
+}
+
+// (숙제2) 다음 함수2개를 만들어보고 타입까지 정의해보십시오.
+// - cutZero()라는 함수를 만듭시다. 이 함수는 문자를 하나 입력하면 맨 앞에 '0' 문자가 있으면 제거하고 문자 type으로 return 해줍니다.
+// - removeDash()라는 함수를 만듭시다. 이 함수는 문자를 하나 입력하면 대시기호 '-' 가 있으면 전부 제거해주고 그걸 숫자 type으로 return 해줍니다.
+// - 함수에 타입지정시 type alias를 꼭 써보도록 합시다. 
+type CutType = (x :string) => string
+
+let cutZero :CutType = function (x){
+    let result = x.replace(/^0+/, "");
+    return result
+}
+function removeDash(x :string) :number{
+    let result = x.replace(/-/g, "");
+    return parseFloat(result)
+}
