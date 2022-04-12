@@ -40,3 +40,25 @@ class User {
         this.name = name;
     }
 }
+
+// 문자 or 숫자 들어올 수 있는 변수는 어떻게 만드는 지 (Union 타입) => 할당하게 되면 타입이 고정된다.
+let 회원:(number | string) = 123; 
+
+// 숫자 or 문자가 가능한 array/object 타입 지정은?
+let 회원들 :(number | string)[] = [1, '2', 3];
+let 오브젝트: { a: string | number } = { a: '123' }
+
+// 모든 타입의 자료형을 허용 (any 타입)
+let 이름: any;
+이름 = 123;
+이름 = {};
+
+// 모든 자료형을 허용해줌 (unknown 타입)
+let 이름: unknown;
+이름 = 123;
+이름 = {};
+
+// 간단한 수학연산도 타입이 맞아야 가능 => unknown은 number타입이 아님
+// string타입 +1 (허용), number타입 +1 (허용), string|number타입 +1 (허용X)
+let 나이: string | number;
+나이 + 1
