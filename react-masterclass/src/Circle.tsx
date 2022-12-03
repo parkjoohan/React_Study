@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface ContainerProps {
@@ -19,7 +20,11 @@ interface CircleProp {
     text?: string;
 }
 
-function Circle({bgColor, borderColor, text="default text"}: CircleProp) {
+function Circle({ bgColor, borderColor, text = "default text" }: CircleProp) {
+    
+    const [value, setValue] = useState<number|string>(0);
+    setValue(2);
+    setValue("hello")
     return (
         <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
             {text}
@@ -28,13 +33,3 @@ function Circle({bgColor, borderColor, text="default text"}: CircleProp) {
 }
 
 export default Circle;
-
-// interface PlayerShape {
-//     name: string,
-//     age: number
-// }
-
-// const sayHello = (playerObj: PlayerShape) => `Hello ${playerObj.name} you are ${playerObj.age} years old.`
-
-// sayHello({ name: "joohan", age: 28 })
-// sayHello({name: "hi", age:12, hello:1 })
