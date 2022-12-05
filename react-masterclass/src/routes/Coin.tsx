@@ -31,7 +31,7 @@ const OverviewItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    width: 33%;
     span:first-child {
         font-size: 10px;
         font-weight: 400;
@@ -57,10 +57,10 @@ const Tab = styled.span<{ isActive:boolean }>`
     font-size: 12px;
     font-weight: 400;
     background-color: rgba(0,0,0,0.5);
-    padding: 7px 0px;
     border-radius: 10px;
     color: ${(props) => props.isActive ? props.theme.accentColor : props.theme.textColor};
     a {
+        padding: 7px 0px;
         display: block;
     }
 `;
@@ -146,10 +146,10 @@ interface ITag {
 }
 
 function Coin() {
-    const [ loading, setLoading ] = useState(true);
     const { coinId } = useParams<RouteParams>();
     const { state } = useLocation<RouteState>();
-    const [ info, setInfo ] = useState<InfoData>();
+    const [info, setInfo] = useState<InfoData>();
+    const [loading, setLoading] = useState(true);
     const [priceInfo, setPriceInfo] = useState<PriceData>();
     const priceMatch = useRouteMatch("/:coinId/price");
     const chartMatch = useRouteMatch("/:coinId/chart");
