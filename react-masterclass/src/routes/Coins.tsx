@@ -62,9 +62,7 @@ interface ICoin {
     type: string;
 }
 const Coins = () => {
-    const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins, {
-        select: (data) => data.slice(0, 30),
-    });
+    const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
     return (
         <Container>
         <Helmet>
