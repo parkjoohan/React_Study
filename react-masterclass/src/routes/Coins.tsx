@@ -23,7 +23,7 @@ const CoinList = styled.ul``;
 const Coin = styled.li`
     margin-bottom: 10px;
     border-radius: 15px;
-    background-color: white;
+    background-color: ${(props) => props.theme.cardBgColor};
     color: ${(props) => props.theme.textColor};
     a {
         display: flex;
@@ -74,8 +74,8 @@ function Coins({ toggleDark }:ICoinsprops ) {
             <title>코인</title>
         </Helmet>
         <Header>
-                <Title>Coin</Title>
-                <button onClick={toggleDark}>Toggle Dark Mode</button>
+            <Title>Coin</Title>
+            <button onClick={toggleDark}>Toggle Dark Mode</button>
         </Header>
         {isLoading ? (
             <Loader>"Loading..."</Loader>
