@@ -24,7 +24,7 @@ const Coin = styled.li`
     margin-bottom: 10px;
     border-radius: 15px;
     background-color: white;
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     a {
         display: flex;
         align-items: center;
