@@ -34,7 +34,7 @@ function ToDoList() {
     const onValid = (data: any) => {
         console.log(data);
     }
-    console.log(formState)
+    console.log(formState.errors)
     return (
         <div>
             <form style={{display: "flex", flexDirection: "column"}} onSubmit={handleSubmit(onValid)}>
