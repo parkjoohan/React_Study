@@ -2,8 +2,10 @@ import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Route, Switch, useLocation, useParams, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { isDarkAtom } from "../atoms";
 import Chart from "./Chart";
 import Price from "./Price";
 
@@ -140,17 +142,7 @@ interface PriceData {
     };
 }
 
-interface ITag {
-    coin_counter: number;
-    ico_counter: number;
-    id: string,
-    name: string
-}
-
-interface ICoinProps {
-}
-
-function Coin({}: ICoinProps) {
+function Coin() {
     const { coinId } = useParams<RouteParams>();
     const { state } = useLocation<RouteState>();
     const priceMatch = useRouteMatch("/:coinId/price");
@@ -163,6 +155,8 @@ function Coin({}: ICoinProps) {
             refetchInterval: 5000,
         }
     );
+    const setDarkAtom = useSetRecoilState(isDarkAtom);
+    const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
     const loading = infoLoading || tickersLoading;
     return (
         <Container>
@@ -171,6 +165,7 @@ function Coin({}: ICoinProps) {
             </Helmet>
             <Header>
                 <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
+                <button onClick={toggleDarkAtom}>Toggle Mode</button>
             </Header>
             {
                 loading ? (
