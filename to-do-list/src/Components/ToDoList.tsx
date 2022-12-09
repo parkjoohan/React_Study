@@ -4,12 +4,13 @@ import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 function ToDoList() {
+    // selector에서 값을 가져오거나 보내기 위해 사용
     const toDos = useRecoilValue(toDoSelector);
     const [category, setCategory] = useRecoilState(categoryState);
     const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+        // select의 value를 가져와 categoryState에 넣어줌
         setCategory(event.currentTarget.value as any);
     };
-    console.log(toDos);
     return (
         <div>
             <h1>To Dos</h1>
